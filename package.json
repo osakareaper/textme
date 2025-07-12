@@ -1,6 +1,12 @@
 {
   "name": "textme",
   "packageManager": "yarn@4.9.1",
-  "private": "true",
-  "workspaces": ["apps/*", "packages/*"]
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@nestjs/core": "^11.1.3",
+    "@typescript-eslint/types": "^8.36.0"
+  }
 }

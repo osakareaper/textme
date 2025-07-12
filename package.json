@@ -1,0 +1,6 @@
+{
+  "name": "textme",
+  "packageManager": "yarn@4.9.1",
+  "private": "true",
+  "workspaces": ["apps/*", "packages/*"]
+}

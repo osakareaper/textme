@@ -18,6 +18,7 @@ node_modules
 
 # backend
 apps/backend/dist
+apps/backend/.env
 
 # IDE
 .vscode

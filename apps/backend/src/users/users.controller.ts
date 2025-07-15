@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { RegisterUserDto } from './dtos/register-user.dto';
+import { LoginUserDto } from './dtos/login-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -25,17 +26,32 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
-  @Post('create')
+  @Post('register')
   @ApiOperation({
-    summary: 'Create a new user',
-    description: 'Creates a new user with the provided username and email.',
+    summary: 'Register a new user',
+    description:
+      'Registers a new user with the provided username, email and password.',
   })
-  @ApiBody({ type: CreateUserDto })
-  async createUser(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(
-      createUserDto.username,
-      createUserDto.email,
-      createUserDto.password,
+  @ApiBody({ type: RegisterUserDto })
+  async createUser(@Body() registerUserDto: RegisterUserDto) {
+    return this.usersService.registerUser(
+      registerUserDto.username,
+      registerUserDto.email,
+      registerUserDto.password,
+    );
+  }
+
+  @Post('login')
+  @ApiOperation({
+    summary: 'Login a user',
+    description:
+      'Logs in a user with the provided username or email and password.',
+  })
+  @ApiBody({ type: LoginUserDto })
+  async validateUser(@Body() loginUserDto: LoginUserDto) {
+    return this.usersService.validateUser(
+      loginUserDto.usernameOrEmail,
+      loginUserDto.password,
     );
   }
 }

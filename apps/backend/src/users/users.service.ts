@@ -23,7 +23,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(
+  async registerUser(
     username: string,
     email: string,
     password: string,
@@ -83,5 +83,22 @@ export class UsersService {
       password: hashedPassword,
     });
     return this.userRepository.save(user);
+  }
+
+  async validateUser(usernameOrEmail: string, password: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
+    });
+
+    if (!user) {
+      throw new BadRequestException('Invalid credentials');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new BadRequestException('Invalid credentials');
+    }
+
+    return user;
   }
 }
